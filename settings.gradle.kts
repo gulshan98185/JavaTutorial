@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "JavaTutorial"
 include(":app")
+include(":java_tut")
