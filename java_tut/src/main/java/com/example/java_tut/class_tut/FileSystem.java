@@ -5,6 +5,10 @@ public abstract class FileSystem {// related to file manager
     long size;
     long createdDate;
     long modifiedDate;
+    public static int num = 0;
+    public int num2 = 0;
+
+    public static final String MOVE = "MOVE";
 
 //    public FileSystem(){
 //        System.out.println("FileSystem Constructor");
@@ -40,6 +44,23 @@ public abstract class FileSystem {// related to file manager
 
     public void moveFile(){
         System.out.println("File moved");
+        int size = 300;
+        if(size>200){
+            formatFileSystem();
+        }
+    }
+
+    final void formatFileSystem(){
+        System.out.println("File accessed");
+        doSomething();
+    }
+
+    public static void doIt(){
+        doSomething();
+    }
+
+    private static void doSomething(){
+        System.out.println("Do something");
     }
 
 }
