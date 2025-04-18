@@ -1,14 +1,15 @@
 package com.example.javatutorial.fastadapter;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-
 import com.example.javatutorial.R;
+import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
-
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.iconics.view.IconicsImageView;
 import java.util.List;
 
 public class FastItem extends AbstractItem<FastItem, FastItem.FastViewHolder> {
@@ -20,9 +21,13 @@ public class FastItem extends AbstractItem<FastItem, FastItem.FastViewHolder> {
         this.age = age;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public int getType() {
-        return 0;
+        return R.id.item;
     }
 
     @Override
@@ -39,11 +44,13 @@ public class FastItem extends AbstractItem<FastItem, FastItem.FastViewHolder> {
     static class FastViewHolder extends FastAdapter.ViewHolder<FastItem> {
         TextView name;
         TextView age;
+        IconicsImageView iconicsImageView;
 
         public FastViewHolder(View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name);
             age = itemView.findViewById(R.id.age);
+            iconicsImageView = itemView.findViewById(R.id.close_button);
         }
 
         @Override
@@ -54,8 +61,13 @@ public class FastItem extends AbstractItem<FastItem, FastItem.FastViewHolder> {
 
         @Override
         public void bindView(FastItem item, List payloads) {
+            Context context = itemView.getContext();
             name.setText(item.name);
             age.setText(item.age + "");
+            iconicsImageView.setIcon(new IconicsDrawable(itemView.getContext(), CommunityMaterial.Icon2.cmd_lightbulb_on)
+                    .color(context.getResources()
+                            .getColor(R.color.green)));
+
         }
     }
 }

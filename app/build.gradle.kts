@@ -31,6 +31,9 @@ android {
 dependencies {
 
     implementation(libs.fastadapter)
+    implementation("com.mikepenz:iconics-views:3.2.5")
+    implementation("com.mikepenz:materialize:1.2.0@aar")
+    implementation("com.mikepenz:community-material-typeface:2.7.94.1")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
