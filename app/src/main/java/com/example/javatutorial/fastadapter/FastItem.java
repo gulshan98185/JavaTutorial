@@ -64,9 +64,15 @@ public class FastItem extends AbstractItem<FastItem, FastItem.FastViewHolder> {
             Context context = itemView.getContext();
             name.setText(item.name);
             age.setText(item.age + "");
-            iconicsImageView.setIcon(new IconicsDrawable(itemView.getContext(), CommunityMaterial.Icon2.cmd_lightbulb_on)
-                    .color(context.getResources()
-                            .getColor(R.color.green)));
+            if(item.isSelected()){
+                iconicsImageView.setIcon(new IconicsDrawable(itemView.getContext(), CommunityMaterial.Icon2.cmd_marker_check)
+                        .color(context.getResources()
+                                .getColor(R.color.red)));
+            }else {
+                iconicsImageView.setIcon(new IconicsDrawable(itemView.getContext(), CommunityMaterial.Icon2.cmd_lightbulb_on)
+                        .color(context.getResources()
+                                .getColor(R.color.green)));
+            }
 
         }
     }

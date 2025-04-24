@@ -49,7 +49,11 @@ public class HeaderItem extends AbstractItem<HeaderItem, HeaderItem.FastViewHold
 
         @Override
         public void bindView(HeaderItem item, List payloads) {
-            name.setText(item.title);
+            if(item.isSelected()) {
+                name.setText(item.title + " selected");
+            }else {
+                name.setText(item.title);
+            }
         }
     }
 }

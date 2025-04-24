@@ -9,8 +9,8 @@
     android:orientation="horizontal">
     <com.mikepenz.iconics.view.IconicsImageView
         android:id="@+id/close_button"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_gravity="center"
         app:iiv_color="@color/black"
         app:iiv_icon="cmd_close"
