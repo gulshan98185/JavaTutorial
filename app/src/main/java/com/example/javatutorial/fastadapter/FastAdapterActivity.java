@@ -1,5 +1,6 @@
 package com.example.javatutorial.fastadapter;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.javatutorial.R;
+import com.example.javatutorial.callback.AbstractItemCallback;
+import com.example.javatutorial.callback.ItemCallback;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.ISelectionListener;
@@ -75,91 +78,21 @@ public class FastAdapterActivity extends AppCompatActivity {
         selectExtension.withMultiSelect(true);
         recyclerView.setAdapter(fastAdapter);
 
-        List<AbstractItem> items = new ArrayList<>();
-        for (int i = 1; i < 100; i++) {
-            if(i % 10 == 1){
-                items.add(new HeaderItem("Header " + i));
-            }
-            items.add(new FastItem("Name " + i, i));
-        }
-
-        fastAdapter.withOnPreLongClickListener(new OnLongClickListener<AbstractItem>() {
+        ItemCallback itemCallback = new ItemCallback() {
             @Override
-            public boolean onLongClick(View v, IAdapter<AbstractItem> adapter, AbstractItem item, int position) {
-                if(item instanceof HeaderItem){
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        /*fastAdapter.withOnPreClickListener(new OnClickListener<AbstractItem>() {
-            @Override
-            public boolean onClick(View v, IAdapter<AbstractItem> adapter, AbstractItem item, int position) {
-                Toast.makeText(FastAdapterActivity.this, "Item is pre clicked : " + (position+1), Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });*/
-
-        fastAdapter.withOnClickListener(new OnClickListener<AbstractItem>() {
-            @Override
-            public boolean onClick(View v, IAdapter<AbstractItem> adapter, AbstractItem item, int position) {
-                if(item instanceof HeaderItem){
-                    return false;
-                }
-                if(!selectExtension.getSelections().isEmpty()){
-                    if(item.isSelected()) {
-                        selectExtension.deselect(position);
-                    }else {
-                        selectExtension.select(position);
-                    }
-                    return false;
-                }
-                Toast.makeText(FastAdapterActivity.this, "Item is clicked : " + ((FastItem)item).getName(), Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-
-        selectExtension.withSelectionListener(new ISelectionListener<AbstractItem>() {
-            @Override
-            public void onSelectionChanged(AbstractItem item, boolean selected) {
-                int totalCount = selectExtension.getSelections().size();
-                if(totalCount > 0){
-                    toolbar.setSubtitle("Selected " + totalCount + " items");
-                }else {
-                    toolbar.setSubtitle("");
-                }
-            }
-        });
-
-        /*fastAdapter.withOnLongClickListener(new OnLongClickListener<AbstractItem>() {
-            @Override
-            public boolean onLongClick(View v, IAdapter<AbstractItem> adapter, AbstractItem item, int position) {
-                if(item instanceof HeaderItem){
-                    return false;
-                }
-                Toast.makeText(FastAdapterActivity.this, "Item is long clicked : " + ((FastItem)item).getName(), Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-        fastAdapter.withEventHook(new ClickEventHook<AbstractItem>() {
-            @Override
-            public void onClick(View v, int position, FastAdapter<AbstractItem> fastAdapter, AbstractItem item) {
-                Toast.makeText(FastAdapterActivity.this, "Item is clicked : " + (position+1), Toast.LENGTH_SHORT).show();
+            public void click(int position, AbstractItem item) {
+                Toast.makeText(FastAdapterActivity.this, "Callback1 is clicked " + position, Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public View onBind(RecyclerView.ViewHolder viewHolder) {
-                if(viewHolder instanceof FastItem.FastViewHolder){
-                    return ((FastItem.FastViewHolder) viewHolder).name;
-                }
-                return super.onBind(viewHolder);
+            public void click2(int position, AbstractItem item) {
+                ItemCallback.super.click2(position, item);
+
             }
-        });*/
+        };
 
-        itemAdapter.setNewList(items);
-//        selectExtension.select(1);
-
+        FastAdapterHandler fastAdapterHandler = new FastAdapterHandler();
+        fastAdapterHandler.handleFastAdapter(this, itemCallback);
     }
 
 

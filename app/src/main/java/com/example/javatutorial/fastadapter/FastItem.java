@@ -5,6 +5,9 @@ import android.view.View;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import com.example.javatutorial.R;
+import com.example.javatutorial.callback.AbstractItemCallback;
+import com.example.javatutorial.callback.ItemCallback;
+import com.example.javatutorial.callback.NormalCallback;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
@@ -15,10 +18,15 @@ import java.util.List;
 public class FastItem extends AbstractItem<FastItem, FastItem.FastViewHolder> {
     private String name;
     private int age;
+    private ItemCallback callback;
+    private AbstractItemCallback abstractItemCallback;
+    private NormalCallback normalCallback;
 
-    public FastItem(String name, int age) {
+    public FastItem(String name, int age, /*ItemCallback callback*/ AbstractItemCallback abstractItemCallback) {
         this.name = name;
         this.age = age;
+        this.abstractItemCallback = abstractItemCallback;
+//        this.callback = callback;
     }
 
     public String getName() {
@@ -73,6 +81,23 @@ public class FastItem extends AbstractItem<FastItem, FastItem.FastViewHolder> {
                         .color(context.getResources()
                                 .getColor(R.color.green)));
             }
+            iconicsImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(item.abstractItemCallback != null){
+                        item.abstractItemCallback.click(getAdapterPosition(), item);
+                    }
+                }
+            });
+
+            name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(item.abstractItemCallback != null){
+                        item.abstractItemCallback.click2(getAdapterPosition(), item, context);
+                    }
+                }
+            });
 
         }
     }
